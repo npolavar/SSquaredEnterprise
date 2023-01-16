@@ -1,0 +1,79 @@
+﻿@model SoftwareEnterprises.Models.Employee
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<br />
+<br />
+
+<div class="container">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Create New Employee</h5>
+                    </div>
+                    <div class="card-body">
+                        <form asp-action="Create">
+                            <div class="form-group">
+                                Select Manager
+
+                                <select class="form-control" name="EmpNameId" asp-items="ViewBag.Emp">
+                                    <option>Select Manager</option>
+                                </select>
+                            </div>
+                            <br />
+
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="EmployesId" class="control-label"></label>
+                                <input asp-for="EmployesId" name="EmployesId" placeholder="Employee ID eg: EMP21" class="form-control" />
+
+                                <span asp-validation-for="EmployesId" class="text-danger"> </span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="FirstName" class="control-label"></label>
+                                <input asp-for="FirstName" name="FirstName" placeholder="First Name" class="form-control" />
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="LastName" class="control-label"></label>
+                                <input asp-for="LastName" name="LastName" placeholder="Last Name" class="form-control" />
+                                <span asp-validation-for="LastName" class="text-danger"></span>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="control-label mb-2">Roles</label>
+
+                                <div class="form-group">
+
+                                    <select class="form-control" required name="SelectRoles" multiple asp-items="ViewBag.Roles"></select>
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <input type="submit" value="Create" class="btn btn-success mt-2" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <a asp-action="Index" class="btn btn-warning mt-2">Back to List</a>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
