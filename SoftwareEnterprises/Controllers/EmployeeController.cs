@@ -39,14 +39,27 @@ namespace SoftwareEnterprises.Controllers
             ViewBag.Roles = new SelectList(_context.Role, "Id", "RoleName");
             return View();
         }
+
         [HttpPost]
         public IActionResult Create(Employee employee, int EmpNameId, int[] SelectRoles)
         {
             
             Employee emp = new Employee();
 
+            // Display error message when roles field is not selected
+            if (SelectRoles.Length == 0)
+            {
+                ViewBag.message = "Roles is required";
+
+                ViewBag.Emp = new SelectList(_context.Employee, "Id", "FullName");
+                ViewBag.Roles = new SelectList(_context.Role, "Id", "RoleName");
+
+                return View(emp);
+            }
+
             var isAlready = _context.Employee.Any(x => x.EmployesId == employee.EmployesId);
            
+            // To verify if the employee id already exist or not 
             if (isAlready)
             {
                 ModelState.AddModelError("EmployesId", "EmployeesId Already Exist");
@@ -99,11 +112,6 @@ namespace SoftwareEnterprises.Controllers
                     }
                     return RedirectToAction("Index");
                 }
-
-
-                ViewBag.Emp = new SelectList(_context.Employee, "Id", "FullName");
-
-                ViewBag.Roles = new SelectList(_context.Role, "Id", "RoleName");
 
             }
             catch(Exception ex)

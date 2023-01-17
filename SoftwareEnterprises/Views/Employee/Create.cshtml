@@ -20,7 +20,7 @@
                             <div class="form-group">
                                 Select Manager
 
-                                <select class="form-control" name="EmpNameId" asp-items="ViewBag.Emp">
+                                <select class="form-control" required onclick="return Validate()" name="EmpNameId" asp-items="ViewBag.Emp">
                                     <option>Select Manager</option>
                                 </select>
                             </div>
@@ -50,14 +50,15 @@
 
                                 <div class="form-group">
 
-                                    <select class="form-control" required name="SelectRoles" multiple asp-items="ViewBag.Roles"></select>
+                                    <select class="form-control" id="SelectRoles" name="SelectRoles" multiple asp-items="ViewBag.Roles"></select>
+                                    <span id="sprole" class="text-danger">@ViewBag.message</span>
                                 </div>
 
                             </div>
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-md-2">
-                                        <input type="submit" value="Create" class="btn btn-success mt-2" />
+                                        <input type="submit" onclick="javascript:validate();" value="Create" class="btn btn-success mt-2" />
                                     </div>
                                     <div class="col-md-4">
                                         <a asp-action="Index" class="btn btn-warning mt-2">Back to List</a>
@@ -75,5 +76,29 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        function validate() {
+
+            var n = document.getElementById("SelectRoles").options.length;
+            var sprole = document.getElementById("sprole");
+
+            var x = true;
+            for (var i = 0; i < n; i++) {
+                if (document.getElementById("SelectRoles").options[i].selected === true)
+                    x = false;
+            }
+            if (x == true) {
+                sprole.innerText = 'Kindly Select Role';
+            }
+            else {
+                sprole.innerText = ' ';
+
+            }
+
+        }
+    </script>
 }
